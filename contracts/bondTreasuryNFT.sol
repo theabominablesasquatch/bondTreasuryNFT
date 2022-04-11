@@ -3,7 +3,7 @@ pragma solidity ^8.0.0;
 
 import "@openZeppelin/contracts/utils/address.sol";
 import "@openZeppelin/contracts/interfaces/IERC20.sol";
-import "@openZeppelin/contracts/libraries/SafeERC20.sol";
+import "@openZeppelin/contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openZeppelin/contracts/interfaces/IERC165.sol";
 import "@openZeppelin/contracts/mocks/ERC165.sol";
 import "@openZeppelin/contracts/interfaces/IERC1155.sol";
