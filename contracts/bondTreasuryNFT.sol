@@ -16,7 +16,7 @@ import "@openZeppelin/contracts/interfaces/IERC721Receiver.sol";
 import "@openZeppelin/contracts/token/ERC1155/utils/ERC721Holder.sol";
 
 contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
- 
+   using SafeERC20 for IERC20;
  /// EVENTS ///
 
     /// @notice Emitted when a contract is whitelisted
