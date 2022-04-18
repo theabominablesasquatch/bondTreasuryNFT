@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^8.0.0;
+pragma solidity ^0.8.0;
 
-import "@openZeppelin/contracts/utils/address.sol";
-import "@openZeppelin/contracts/interfaces/IERC20.sol";
-import "@openZeppelin/contracts/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openZeppelin/contracts/interfaces/IERC165.sol";
-import "@openZeppelin/contracts/mocks/ERC165.sol";
-import "@openZeppelin/contracts/interfaces/IERC1155.sol";
-import "@openZeppelin/contracts/interfaces/IERC721.sol";
-import "./interfaces/IbondTreasury.sol";
-import "@openZeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/interfaces/IERC165.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/interfaces/IERC1155.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
+import "./interfaces/IbondTreasuryNFT.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title   Bonding Contract
 /// @author  JeffX, AbominableSasquatch, Jomari
