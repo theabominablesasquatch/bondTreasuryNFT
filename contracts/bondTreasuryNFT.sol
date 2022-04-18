@@ -45,9 +45,8 @@ contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
     /// @notice Emitted when ERC721 tokens are withdrawn
     /// @param token Address of token being withdrawn
     /// @param destination Address of where withdrawn token is sent
-    /// @param ids Array of ids that are being witdrawn
-    /// @param amounts Amounts of token being withdrawn corresponding with ID
-    event WithdrawERC721(address token, address destination, uint[] ids, uint[] amounts);
+    /// @param id id that will be witdrawn
+    event WithdrawERC721(address token, address destination,uint id);
     
     
     /// STATE VARIABLES ///
@@ -55,6 +54,9 @@ contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
     //need to name the token distributed
     /// @notice Guild DAO Token
     address public immutable GDT;
+
+    //Initial owner info
+    address public policy;
 
     /// @notice Stores approved bond contracts
     mapping(address => bool) public bondContract; 
@@ -99,7 +101,7 @@ contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
     /// @param _token        Address of token to withdraw
     /// @param _destination  Address of where to send `_token`
     /// @param _amount       Amount of `_token` to withdraw
-    function withdrawERC20(address _token, address _destination, uint _amount) external onlyPolicy() {
+    function withdrawERC20(address _token, address _destination, uint _amount) external onlyOwner() {
         IERC20(_token).safeTransfer(_destination, _amount);
         emit WithdrawERC20(_token, _destination, _amount);
     }
@@ -109,34 +111,33 @@ contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
     /// @param _destination  Address of where to send `_token`
     /// @param _ids          Array of IDs of `_token`
     /// @param _amounts      Array of amount of corresponding `_id`
-    function withdrawERC1155(address _token, address _destination, uint[] calldata _ids, uint[] calldata _amounts) external onlyPolicy() {
+    function withdrawERC1155(address _token, address _destination, uint[] calldata _ids, uint[] calldata _amounts) external onlyOwner() {
         IERC1155(_token).safeBatchTransferFrom(address(this), _destination, _ids, _amounts, '');
         emit WithdrawERC1155(_token, _destination, _ids, _amounts);
     }
 
-    //Revisit this function
+    //Revisit this function - not batched
 
     /// @notice              Withdraw ERC721 token to `_destination`
     /// @param _token        Address of token to withdraw
     /// @param _destination  Address of where to send `_token`
-    /// @param _ids          Array of IDs of `_token`
-    /// @param _amounts      Array of amount of corresponding `_id`
-    function withdrawERC721(address _token, address _destination, uint[] calldata _ids, uint[] calldata _amounts) external onlyPolicy() {
-        IERC721(_token).safeBatchTransferFrom(address(this), _destination, _ids, _amounts, '');
-        emit WithdrawERC721(_token, _destination, _ids, _amounts);
+    /// @param _id          IDs of `_token`
+    function withdrawERC721(address _token, address _destination, uint _id) external onlyOwner() {
+        IERC721(_token).safeTransferFrom(address(this), _destination, _id);
+        emit WithdrawERC721(_token, _destination, _id);
     }
 
 
     /// @notice               Whitelist bond contract
     /// @param _bondContract  Address to whitelist
-    function whitelistBondContract(address _bondContract) external onlyPolicy() {
+    function whitelistBondContract(address _bondContract) external onlyOwner() {
         bondContract[_bondContract] = true;
         emit BondContractWhitelisted(_bondContract);
     }
 
     /// @notice               Dewhitelist bond contract
     /// @param _bondContract  Address to dewhitelist
-    function dewhitelistBondContract(address _bondContract) external onlyPolicy() {
+    function dewhitelistBondContract(address _bondContract) external onlyOwner() {
         bondContract[_bondContract] = false;
         emit BondContractDewhitelisted(_bondContract);
     }
@@ -144,4 +145,3 @@ contract bondingTreasuryNFT is Ownable, ERC1155Holder, ERC721Holder{
 
 
 
-}

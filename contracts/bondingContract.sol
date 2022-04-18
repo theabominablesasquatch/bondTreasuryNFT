@@ -129,7 +129,7 @@ contract BondingContract is Ownable {
 
     /// @notice              Initializes bond and sets vesting rate
     /// @param _vestingTerm  Vesting term in blocks
-    function initializeBond(uint _vestingTerm) external onlyPolicy() {
+    function initializeBond(uint _vestingTerm) external onlyOwner() {
         require(!initialized, "Already initialized");
         vestingTerm = _vestingTerm;
         initialized = true;
@@ -137,7 +137,7 @@ contract BondingContract is Ownable {
 
     /// @notice          Updates current vesting term
     /// @param _vesting  New vesting in blocks
-    function setVesting( uint _vesting ) external onlyPolicy() {
+    function setVesting( uint _vesting ) external onlyOwner() {
         require(initialized, "Not initalized");
         vestingTerm = _vesting;
     }
@@ -146,7 +146,7 @@ contract BondingContract is Ownable {
     /// @param _ids       Array of IDs that will be sold
     /// @param _prices    GDT given to bond correspond ID in `_ids`
     /// @param _toBeSold  Number of IDs looking to be acquired
-    function setIdDetails(uint[] calldata _ids, uint[] calldata _prices, uint _toBeSold) external onlyPolicy() {
+    function setIdDetails(uint[] calldata _ids, uint[] calldata _prices, uint _toBeSold) external onlyOwner() {
         require(_ids.length == _prices.length, "Lengths do not match");
         for(uint i; i < _ids.length; i++) {
             IdDetails memory idDetail = idDetails[_ids[i]];
